@@ -1,5 +1,6 @@
 ---
 name: doubao-work-with-chatgpt
+label: Doubao Work with ChatGPT
 description: >
   Use ChatGPT (web) as the planning and review brain for Doubao Work sessions,
   while Doubao Work keeps full execution ownership. Use when the user says
@@ -189,10 +190,15 @@ override defaults that close the tab, hide the window, or stall on the settings 
 - Do not add `-w` to machine-wide commands: `update-check`, `sandbox-allow`,
   `prefs`, `tunnel login`. They still accept and ignore `-w`, so a leftover
   flag must not fail the command.
-- Skill install path: copy this file to the user's Doubao Work skills directory
-  (typically `~/DoubaoWork/skills/doubao-work-with-chatgpt/SKILL.md` or the
-  `.user_skills` directory under the Doubao Work workspace). The exact path
-  depends on the user's Doubao Work installation.
+- Skill install path: Doubao Work scans multiple skill root directories. Install
+  to the **first available** of these, in priority order:
+  1. `~/DoubaoWork/skills/doubao-work-with-chatgpt/SKILL.md` (create the dirs if missing)
+  2. The `.user_skills` directory — find it with:
+     `find "$HOME/Library/Application Support/DoubaoWork" -name ".user_skills" -type d 2>/dev/null | head -1`
+     then install to `<that_dir>/doubao-work-with-chatgpt/SKILL.md`.
+  After installing, **restart Doubao Work** so it picks up the new Skill.
+  To verify it loaded: start a new chat and ask "你有哪些技能？" —
+  "Doubao Work with ChatGPT" should appear in the list.
 
 ## Daily update check
 

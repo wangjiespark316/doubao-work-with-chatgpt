@@ -25,10 +25,11 @@ ChatGPT thinks. Doubao Work works. ChatGPT 负责思考，豆包工作负责干�
 2. 下载：把 https://github.com/wangjiespark316/doubao-work-with-chatgpt 克隆到
  ~/doubao-work-with-chatgpt（已存在就 git pull 更新）。
 3. 构建：在该目录里执行 corepack pnpm install 和 corepack pnpm build。
-4. 安装 Skill：把仓库里的 skill/SKILL.md 复制到你的豆包工作技能目录
- （通常是 ~/DoubaoWork/skills/doubao-work-with-chatgpt/SKILL.md），
- 并把文件中 "The doubao-work-with-chatgpt checkout lives at:" 那一行的路径
- 改成实际克隆路径。
+4. 安装 Skill：把仓库里的 skill/SKILL.md 复制到豆包工作的技能目录。
+ 优先用 ~/DoubaoWork/skills/doubao-work-with-chatgpt/SKILL.md（目录不存在就创建）；
+ 如果该路径不生效，用命令 find "$HOME/Library/Application Support/DoubaoWork" -name ".user_skills" -type d 找到 .user_skills 目录，复制到该目录下的 doubao-work-with-chatgpt/SKILL.md。
+ 复制后把文件中 "The doubao-work-with-chatgpt checkout lives at:" 那一行的路径改成实际克隆路径。
+ 安装完成后重启豆包工作，然后开一个新对话问"你有哪些技能"，确认 "Doubao Work with ChatGPT" 出现在列表里。
 5. 首次配置：按 SKILL.md 里的 first-time setup 流程执行
  （运行 c2c setup，用内置浏览器打开 ChatGPT 配置连接器并输入配对码）。
  全程只用内置浏览器，禁止打开任何第三方浏览器。
@@ -40,7 +41,7 @@ ChatGPT thinks. Doubao Work works. ChatGPT 负责思考，豆包工作负责干�
 
 ## 手动安装 → 配置 → 使用
 
-1. 安装 Skill：把 `skill/` 复制到你的豆包工作技能目录下的 `doubao-work-with-chatgpt/`。
+1. 安装 Skill：把 `skill/SKILL.md` 复制到 `~/DoubaoWork/skills/doubao-work-with-chatgpt/SKILL.md`（目录不存在就创建）。如果重启豆包工作后技能没出现，改用 `.user_skills` 目录：运行 `find "$HOME/Library/Application Support/DoubaoWork" -name ".user_skills" -type d` 找到路径，复制到该目录下的 `doubao-work-with-chatgpt/SKILL.md`。复制后修改文件中 "checkout lives at:" 一行为实际克隆路径，然后重启豆包工作。
 
 2. 告诉豆包工作：**"使用 Doubao Work with ChatGPT 完成首次配置。"**
 
