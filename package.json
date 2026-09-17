@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/YOUR_USERNAME/doubao-work-with-chatgpt.git"
+    "url": "https://github.com/wangjiespark316/doubao-work-with-chatgpt.git"
   },
   "bin": {
     "c2c": "./bin/c2c.js"

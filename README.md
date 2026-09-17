@@ -22,7 +22,7 @@ ChatGPT thinks. Doubao Work works. ChatGPT 负责思考，豆包工作负责干�
 
 1. 环境自检：需要 git 和 Node.js ≥ 20，缺什么就自动安装
  （macOS 用 Homebrew，Windows 用 winget），同时安装 cloudflared。
-2. 下载：把 https://github.com/YOUR_USERNAME/doubao-work-with-chatgpt 克隆到
+2. 下载：把 https://github.com/wangjiespark316/doubao-work-with-chatgpt 克隆到
  ~/doubao-work-with-chatgpt（已存在就 git pull 更新）。
 3. 构建：在该目录里执行 corepack pnpm install 和 corepack pnpm build。
 4. 安装 Skill：把仓库里的 skill/SKILL.md 复制到你的豆包工作技能目录
