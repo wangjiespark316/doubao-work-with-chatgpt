@@ -176,7 +176,7 @@ override defaults that close the tab, hide the window, or stall on the settings 
 
 ## Locations
 
-- The doubao-work-with-chatgpt checkout lives at: `<ACTUAL_CHECKOUT_PATH>`
+- The doubao-work-with-chatgpt checkout lives at: `/Users/wangjie/doubao-work-with-chatgpt`
   (installer/update MUST replace this line in the installed Skill with the user's actual checkout path.)
 - CLI: let `<checkout>` mean the path on the previous line; run
   `node "<checkout>/bin/c2c.js" <command>` (or `c2c <command>` if globally linked).
@@ -233,24 +233,27 @@ Inside the checkout directory (see Locations):
 
 ## Connection choice (once per workspace)
 
-Ask this **before** the public address exists (`c2c setup` / first `doctor --fix`
-that starts a tunnel). Do not mention tunnels, wrangler, DNS, or hostnames.
-Speak only of 临时地址 / 固定域名 / 登录 Cloudflare.
+**Default to temporary address — do NOT ask the user.** Most users don't have a
+Cloudflare account or custom domain, and asking breaks the flow. Only offer the
+fixed-domain option if the user主动 mentions "固定域名"、"Cloudflare"、"域名"、
+"重启后要重新连" or similar.
 
 1. `c2c tunnel status -w <workspace> --json`
-2. If `needsChoice` is false: do not ask again.
-3. If `needsChoice` is true: tell the user exactly `userPrompt` and wait.
-   - 没有账号 / 没有域名 / 临时 / 不用 →
-     `c2c tunnel choose -w <ws> --mode quick --json`
-   - 有域名（例如 example.com）→ first tell them `loginPrompt`, then
-     `c2c tunnel choose -w <ws> --mode named --zone <domain> --json`.
-     This may open the user's own browser (the Cloudflare exception in
+2. If `needsChoice` is false: do nothing.
+3. If `needsChoice` is true: **silently choose temporary address**:
+   `c2c tunnel choose -w <ws> --mode quick --json`
+4. Only if the user explicitly asks for a fixed domain:
+   - Ask for their domain (e.g. example.com)
+   - Tell them `loginPrompt`, then
+     `c2c tunnel choose -w <ws> --mode named --zone <domain> --json`
+   - This may open the user's own browser (the Cloudflare exception in
      Golden rule 5). Wait until the command finishes.
-     If they said they have an account but gave no domain: ask once for the
-     domain. If the command returns `need: "zone"`, ask once and retry.
-     If `fallback` is true: tell them `userMessage` and continue on the
-     temporary address. Do not retry named unless they ask.
-4. Never put connection credentials in the project. The CLI stores them in
+   - If `fallback` is true: tell them `userMessage` and continue on the
+     temporary address.
+5. After first-time setup completes, you may add one optional line:
+   "提示：如果你有 Cloudflare 账号和域名，可以随时告诉我配置固定地址，
+   这样电脑重启后不用重新连接。" — but do not wait for a response.
+6. Never put connection credentials in the project. The CLI stores them in
    the C2C state directory.
 
 ## Workflow: first-time setup（"使用 Doubao Work with ChatGPT 完成首次配置"）
@@ -519,7 +522,7 @@ All control messages start with `[C2C]`. Keep Doubao Work→ChatGPT messages und
 ChatGPT's replies are expected to be substantive (see step 3). Docs: `docs/protocol.md`.
 
 0. `c2c tunnel status -w <workspace> --json`. If `needsChoice`, follow
-   **Connection choice** first (existing installs: ask once, then remember).
+   **Connection choice** first (silently pick temporary address — never ask).
    Then `c2c doctor -w <workspace> --json` (auto-repairs). **Doctor gate:** if local
    is not green, do not open ChatGPT and do not send INIT. If
    `namedRepair.needed` is true, tell the user `namedRepair.userMessage`, run
